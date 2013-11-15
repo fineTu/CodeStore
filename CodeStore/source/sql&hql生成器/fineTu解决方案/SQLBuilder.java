@@ -13,6 +13,7 @@ public class SQLBuilder {
 	protected StringBuffer conditionSb = null;
 	protected List<Object> paramList = null;
 	protected String res = null;
+	protected String resForCount = null;
 	
 	public SQLBuilder(String tableName,String selectStr){
 		this.tableName = tableName;
@@ -50,7 +51,7 @@ public class SQLBuilder {
 	}
 	public void addLikeParam(String clomName,Object param){
 		conditionSb.append(" and "+clomName+" like ?");
-		paramList.add(param);
+		paramList.add("%"+param.toString()+"%");
 	}
 	public void addBetweenParam(String clomName,Object param1,Object param2){
 		conditionSb.append(" and "+clomName+" between ? and ?");
@@ -66,11 +67,11 @@ public class SQLBuilder {
 		conditionSb.replace(conditionSb.length()-1, conditionSb.length(), ")");
 		
 	}
-	public void addCondition(String hqlStr){
-		conditionSb.append(" and "+hqlStr);
+	public void addCondition(String sqlStr){
+		conditionSb.append(" and "+sqlStr);
 	}
-	public void addCondition(String hqlStr,Object[] params){
-		conditionSb.append(" and "+hqlStr);
+	public void addCondition(String sqlStr,Object[] params){
+		conditionSb.append(" and "+sqlStr);
 		for(Object p : params){
 			paramList.add(p);
 		}
@@ -98,6 +99,7 @@ public class SQLBuilder {
 		if(groupStr != null){
 			res = res + groupStr;
 		}
+		resForCount = "select count(*) from ( "+res+" )";
 		return res;
 	}
 	
@@ -115,6 +117,8 @@ public class SQLBuilder {
 	public void setOrderStr(String orderStr) {
 		this.orderStr = orderStr;
 	}
-	
+	public String getResForCount() {
+		return resForCount;
+	}
 	
 }

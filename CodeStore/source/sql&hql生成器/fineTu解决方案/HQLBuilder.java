@@ -34,6 +34,7 @@ public class HQLBuilder extends SQLBuilder {
 		if(groupStr != null){
 			res = res + groupStr;
 		}
+		resForCount = "select count(*) from ( "+res+" )";
 		return res;
 	}
 	
