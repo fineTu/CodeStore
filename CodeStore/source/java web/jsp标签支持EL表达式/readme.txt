@@ -1,0 +1,2 @@
+1.在tld文件中设置标签属性的rtexprvalue属性为true
+2。需要在Tag类中进行手工解析EL表达式
