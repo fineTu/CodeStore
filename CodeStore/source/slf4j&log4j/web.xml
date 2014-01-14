@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  <display-name>springTest1</display-name>	
+  <!-- <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list> -->
+  <!-- log4j -->
+  	<context-param>
+      	<param-name>webAppRootKey</param-name>
+      	<param-value>springTest1.root</param-value>
+ 	</context-param>
+ 
+ 	<context-param>
+      	<param-name>log4jConfigLocation</param-name>
+      	<param-value>WEB-INF/classes/log4j.properties</param-value>
+ 	</context-param>
+ 	
+ 	<context-param>
+      	<param-name>log4jRefreshInterval</param-name>
+      	<param-value>3000</param-value>
+ 	</context-param>
+
+	<listener>
+  		<listener-class>
+       		org.springframework.web.util.Log4jConfigListener
+  		</listener-class>
+ 	</listener>
+  
+  <context-param>
+  	<!-- 让javaEE载入spring的上下文配置 -->
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+  <listener>
+  	<!-- 引入Ioc容器了！负责启动Ioc容器监听器，原来javaEE靠这个来初始化spring-->
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+  	<!-- spring MVC的载体上场，一个大servlet，主控Servlet，名字就能看出来，专管Dispatch -->
+  	<servlet-name>mainServlet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<load-on-startup>2</load-on-startup>
+  </servlet>
+  <!-- javaEE的配置，吧主控servlet挡在入口，拦截所有的.html请求，.html是个技巧，很好的隐藏了技术又能优化搜索引擎抓取，真想请求静态html的时候可以用.htm来请求 -->
+  <servlet-mapping>
+  	<servlet-name>mainServlet</servlet-name>
+  	<url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+</web-app>

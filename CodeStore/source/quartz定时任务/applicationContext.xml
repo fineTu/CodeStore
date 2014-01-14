@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:location="classpath:config.properties"
+		p:fileEncoding="utf-8" />
+	<!-- <context:property-placeholder location="classpath:config.properties" />
+	<bean id="utf8" class="java.lang.String" >
+		<constructor-arg value="utf-8" />
+	</bean> -->
+	<!-- 注解扫描目标 配置 -->
+	<context:component-scan base-package="dao"/>
+	<context:component-scan base-package="service"/>
+	<context:component-scan base-package="po"/>
+	<!-- 配置数据源，这里用的是纯粹的spring封装jdbc的方式 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="${jdbcDriver}">
+		</property>
+		<property name="url"
+			value="${url}">
+		</property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+	 	class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+	 	p:dataSource-ref="dataSource" />
+	 <!-- 基础dao类 jdbcTemplate模板类 -->
+	<bean id="jdbcTemplate" 
+		class="org.springframework.jdbc.core.JdbcTemplate" 
+		p:dataSource-ref="dataSource" />
+	<!-- 使用事务管理类使service中所有的方法都添加事务 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config proxy-target-class="true" >
+		<aop:pointcut expression="execution(* service..*(..))" id="serviceMethod"/>
+		<!-- 此处即可看作是自动事务+AOP，前面定义了自动事务的对象，在此处的aop设置中引用之 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
+	</aop:config>
+	<!-- 定时任务-->
+	<!-- 启动触发器的配置开始 -->  
+    <bean name="startQuertz" lazy-init="false" autowire="no"  
+        class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="triggers">  
+            <list>  
+                <ref bean="myJobTrigger" />  
+            </list>  
+        </property>  
+    </bean>  
+    <!-- 启动触发器的配置结束 -->  
+  
+    <!-- 调度的配置开始 -->  
+    <!--  
+        quartz-1.8以前的配置   
+    <bean id="myJobTrigger"  
+        class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail">  
+            <ref bean="myJobDetail" />  
+        </property>  
+        <property name="cronExpression">  
+            <value>0/1 * * * * ?</value>  
+        </property>  
+    </bean>  
+    -->  
+    <!-- quartz-2.x的配置 -->  
+    <bean id="myJobTrigger"  
+        class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail">  
+            <ref bean="myJobDetail" />  
+        </property>  
+        <property name="cronExpression">  
+            <value>0/10 * * * * ?</value>  
+        </property>  
+    </bean>  
+    <!-- 调度的配置结束 -->  
+  
+    <!-- job的配置开始 -->  
+    <bean id="myJobDetail"  
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject">  
+            <ref bean="myJob" />  
+        </property>  
+        <property name="targetMethod">  
+            <value>work</value>  
+        </property>  
+    </bean>  
+    <!-- job的配置结束 -->  
+  
+    <!-- 工作的bean -->  
+    <bean id="myJob" class="util.MyJob" />  
+</beans>
