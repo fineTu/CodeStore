@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CodeStore.iml" filepath="$PROJECT_DIR$/CodeStore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CodeStore/source/java web/多线程下载/TcpDemo/TcpDemo.iml" filepath="$PROJECT_DIR$/CodeStore/source/java web/多线程下载/TcpDemo/TcpDemo.iml" />
+    </modules>
+  </component>
+</project>
+
