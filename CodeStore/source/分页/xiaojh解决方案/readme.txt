@@ -5,7 +5,7 @@ Page可以根据自己的pageNumber属性自动修正页小于0或大于pageNumb
 	3。压入request中待jsp使用
 service层需要一个返回page对象的方法，核心是一条count语句；和一个返回list的查询方法。
 ///////////////////////////////////////////////////////////////////
-
+git 练习！！！
 ///////////////by江圣///////////////////
 @Action(value = MY_ANNOUNCEMENTS, results = {@Result(name = SUCCESS, location = FOREPART
 			+ MY_ANNOUNCEMENTS + JSP)})

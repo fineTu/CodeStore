@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6885ddff-15d9-4415-945c-12590a0526a0" name="Default" comment="" />
+    <list default="true" id="6885ddff-15d9-4415-945c-12590a0526a0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CodeStore/source/分页/fineTu解决方案/readme.txt" afterPath="$PROJECT_DIR$/CodeStore/source/分页/fineTu解决方案/readme.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CodeStore/source/分页/xiaojh解决方案/readme.txt" afterPath="$PROJECT_DIR$/CodeStore/source/分页/xiaojh解决方案/readme.txt" />
+    </list>
     <ignored path="CodeStore.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="6885ddff-15d9-4415-945c-12590a0526a0" time="1396326705442" ignored="false" />
@@ -286,7 +289,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="878" extended-state="1" />
+    <frame x="0" y="22" width="1440" height="878" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
